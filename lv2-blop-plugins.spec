@@ -1,18 +1,18 @@
 Summary:	Port of the BLOP LADSPA plugins to LV2
 Summary(pl.UTF-8):	Port wtyczek LADSPA BLOP do LV2
 Name:		lv2-blop-plugins
-Version:	1.0.0
-Release:	2
+Version:	1.0.2
+Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://download.drobilla.net/blop-lv2-%{version}.tar.bz2
-# Source0-md5:	3dfd6f7366938a25a47d09d9dd863b8b
+# Source0-md5:	6c9688652dec5329ea06f99b657aa174
 URL:		http://drobilla.net/software/blop-lv2/
 BuildRequires:	libstdc++-devel
-BuildRequires:	lv2-devel >= 1.2.0
+BuildRequires:	lv2-devel >= 1.16.0
 BuildRequires:	pkgconfig
-BuildRequires:	python
-Requires:	lv2 >= 1.2.0
+BuildRequires:	python >= 2
+Requires:	lv2 >= 1.16.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoprovfiles	%{_libdir}/lv2
@@ -50,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README
+%doc AUTHORS NEWS README.md
 %dir %{_libdir}/lv2/blop.lv2
 %{_libdir}/lv2/blop.lv2/*.ttl
 %attr(755,root,root) %{_libdir}/lv2/blop.lv2/*.so
