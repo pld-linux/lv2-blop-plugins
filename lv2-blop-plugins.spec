@@ -1,17 +1,20 @@
 Summary:	Port of the BLOP LADSPA plugins to LV2
 Summary(pl.UTF-8):	Port wtyczek LADSPA BLOP do LV2
 Name:		lv2-blop-plugins
-Version:	1.0.2
+Version:	1.0.4
 Release:	1
 License:	GPL v3+
 Group:		Libraries
-Source0:	http://download.drobilla.net/blop-lv2-%{version}.tar.bz2
-# Source0-md5:	6c9688652dec5329ea06f99b657aa174
+Source0:	http://download.drobilla.net/blop-lv2-%{version}.tar.xz
+# Source0-md5:	379e0d924de0fd603a7567e5b66371ea
 URL:		http://drobilla.net/software/blop-lv2/
-BuildRequires:	libstdc++-devel
 BuildRequires:	lv2-devel >= 1.16.0
+BuildRequires:	meson >= 0.56.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	python >= 2
+BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	lv2 >= 1.16.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -27,23 +30,14 @@ Ten pakiet zawiera port wtyczek LADSPA BLOP do LV2.
 %setup -q -n blop-lv2-%{version}
 
 %build
-CC="%{__cc}" \
-CXX="%{__cxx}" \
-CFLAGS="%{rpmcflags}" \
-CXXFLAGS="%{rpmcxxflags}" \
-LDFLAGS="%{rpmldflags}" \
-./waf configure \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir} \
-	--strict
+%meson build
 
-./waf -v
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./waf install \
-	--destdir=$RPM_BUILD_ROOT
+%ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
